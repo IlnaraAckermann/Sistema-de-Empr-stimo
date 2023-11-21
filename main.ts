@@ -145,4 +145,44 @@ abstract class Emprestimo {
 
 }
 
+class EmprestimoPessoal extends Emprestimo {
+    constructor($nome: String, $idade: number, $valorDoEmprestimo: number, $quantidadeDeParcelas: number, $rendaMensalDoSolicitante: number, $possuiHabilitacao: boolean, $ehEstudante: boolean) {
+        super($nome, $idade, $valorDoEmprestimo, $quantidadeDeParcelas, $rendaMensalDoSolicitante, $possuiHabilitacao,$ehEstudante);
+    }
+    public aprovarEmprestimo(): boolean {
+        let ehMaiorDeIdade : boolean = this.$idade >=18;
+        let possuiRendaSuficiente : boolean = this.$rendaMensalDoSolicitante > 2500;
+        let podePagarParcela : boolean = (this.$valorDoEmprestimo/this.$quantidadeDeParcelas) <= (this.$rendaMensalDoSolicitante*0.3); 
+        
+        return (ehMaiorDeIdade && possuiRendaSuficiente&&podePagarParcela)
+    }
+}
+class EmprestimoAutomovel extends Emprestimo {
+    constructor($nome: String, $idade: number, $valorDoEmprestimo: number, $quantidadeDeParcelas: number, $rendaMensalDoSolicitante: number, $possuiHabilitacao: boolean, $ehEstudante: boolean) {
+        super($nome, $idade, $valorDoEmprestimo, $quantidadeDeParcelas, $rendaMensalDoSolicitante, $possuiHabilitacao,$ehEstudante);
+    }
+    public aprovarEmprestimo(): boolean {
+        let ehMaiorDeIdade : boolean = this.$idade >=18;
+        let possuiRendaSuficiente : boolean = this.$rendaMensalDoSolicitante > 3000;
+        let podePagarParcela : boolean = (this.$valorDoEmprestimo/this.$quantidadeDeParcelas) <= (this.$rendaMensalDoSolicitante*0.3); 
+        
+        return (ehMaiorDeIdade && possuiRendaSuficiente&&podePagarParcela && this.$possuiHabilitacao)
+    }
+}
+class EmprestimoEstudantil extends Emprestimo {
+    constructor($nome: String, $idade: number, $valorDoEmprestimo: number, $quantidadeDeParcelas: number, $rendaMensalDoSolicitante: number, $possuiHabilitacao: boolean, $ehEstudante: boolean) {
+        super($nome, $idade, $valorDoEmprestimo, $quantidadeDeParcelas, $rendaMensalDoSolicitante, $possuiHabilitacao,$ehEstudante);
+    }
+    public aprovarEmprestimo(): boolean {
+        let ehMaiorDeIdade : boolean = this.$idade >=18;
+        let possuiRendaSuficiente : boolean = this.$rendaMensalDoSolicitante > 3000;
+        let podePagarParcela : boolean = (this.$valorDoEmprestimo/this.$quantidadeDeParcelas) <= (this.$rendaMensalDoSolicitante*0.3); 
+        
+        return (ehMaiorDeIdade && possuiRendaSuficiente&&podePagarParcela && this.$ehEstudante)
+    }
+}
+
+
+const solicitacoes : Emprestimo[] = [];
+
 
