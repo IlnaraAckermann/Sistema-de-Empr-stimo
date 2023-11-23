@@ -8,6 +8,7 @@ abstract class Emprestimo {
 	private idade: number;
 	private valorDoEmprestimo: number;
 	private quantidadeDeParcelas: number;
+	private valorDasParcelas: number;
 	private rendaMensalDoSolicitante: number;
 	private possuiHabilitacao: boolean;
 	private ehEstudante: boolean;
@@ -18,6 +19,7 @@ abstract class Emprestimo {
      * @param $idade - Idade do solicitante
      * @param $valorDoEmprestimo - Valor solicitado para empréstimo
      * @param $quantidadeDeParcelas - Número de parcelas do empréstimo
+     * @param $valorDasParcelas - valor das parcelas do empréstimo
      * @param $rendaMensalDoSolicitante - Renda mensal do solicitante
      * @param $possuiHabilitacao - Indica se o solicitante possui habilitação de motorista
      * @param $ehEstudante - Indica se o solicitante é estudante
@@ -27,6 +29,7 @@ abstract class Emprestimo {
 		$idade: number,
 		$valorDoEmprestimo: number,
 		$quantidadeDeParcelas: number,
+		$valorDasParcelas: number,
 		$rendaMensalDoSolicitante: number,
 		$possuiHabilitacao: boolean,
 		$ehEstudante: boolean
@@ -35,9 +38,27 @@ abstract class Emprestimo {
 		this.idade = $idade;
 		this.valorDoEmprestimo = $valorDoEmprestimo;
 		this.quantidadeDeParcelas = $quantidadeDeParcelas;
+		this.valorDasParcelas = $valorDasParcelas;
 		this.rendaMensalDoSolicitante = $rendaMensalDoSolicitante;
 		this.possuiHabilitacao = $possuiHabilitacao;
 		this.ehEstudante = $ehEstudante;
+	}
+
+	
+    /**
+     * Getter $valorDasParcelas
+     * @return {number}
+     */
+	public get $valorDasParcelas(): number {
+		return this.valorDasParcelas;
+	}
+
+    /**
+     * Setter $valorDasParcelas
+     * @param {number} value
+     */
+	public set $valorDasParcelas(value: number) {
+		this.valorDasParcelas = value;
 	}
 
     /**
@@ -140,11 +161,12 @@ abstract class Emprestimo {
  */
 class EmprestimoPessoal extends Emprestimo {
     /**
-     * Construtor da classe EmprestimoPessoal
+     * Construtor da classe Emprestimo Pessoal
      * @param $nome - Nome do solicitante
      * @param $idade - Idade do solicitante
      * @param $valorDoEmprestimo - Valor solicitado para empréstimo
      * @param $quantidadeDeParcelas - Número de parcelas do empréstimo
+     * @param $valorDasParcelas - valor das parcelas do empréstimo
      * @param $rendaMensalDoSolicitante - Renda mensal do solicitante
      * @param $possuiHabilitacao - Indica se o solicitante possui habilitação de motorista
      * @param $ehEstudante - Indica se o solicitante é estudante
@@ -154,6 +176,7 @@ class EmprestimoPessoal extends Emprestimo {
 		$idade: number,
 		$valorDoEmprestimo: number,
 		$quantidadeDeParcelas: number,
+		$valorDasParcelas: number,
 		$rendaMensalDoSolicitante: number,
 		$possuiHabilitacao: boolean,
 		$ehEstudante: boolean
@@ -163,6 +186,7 @@ class EmprestimoPessoal extends Emprestimo {
 			$idade,
 			$valorDoEmprestimo,
 			$quantidadeDeParcelas,
+			$valorDasParcelas,
 			$rendaMensalDoSolicitante,
 			$possuiHabilitacao,
 			$ehEstudante
@@ -175,20 +199,19 @@ class EmprestimoPessoal extends Emprestimo {
 	public aprovarEmprestimo(): boolean {
 		let ehMaiorDeIdade: boolean = this.$idade >= 18;
 		let possuiRendaSuficiente: boolean = this.$rendaMensalDoSolicitante > 2500;
-		let podePagarParcela: boolean =
-			this.$valorDoEmprestimo / this.$quantidadeDeParcelas <=
-			this.$rendaMensalDoSolicitante * 0.3;
+		let valorConfere: boolean = ((this.$valorDoEmprestimo/this.$quantidadeDeParcelas) === (this.$valorDasParcelas) );
 
-		return ehMaiorDeIdade && possuiRendaSuficiente && podePagarParcela;
+		return ehMaiorDeIdade && possuiRendaSuficiente && valorConfere;
 	}
 }
 class EmprestimoAutomovel extends Emprestimo {
      /**
      * Construtor da classe EmprestimoAutomovel
-     * @param $nome - Nome do solicitante
+      * @param $nome - Nome do solicitante
      * @param $idade - Idade do solicitante
      * @param $valorDoEmprestimo - Valor solicitado para empréstimo
      * @param $quantidadeDeParcelas - Número de parcelas do empréstimo
+     * @param $valorDasParcelas - valor das parcelas do empréstimo
      * @param $rendaMensalDoSolicitante - Renda mensal do solicitante
      * @param $possuiHabilitacao - Indica se o solicitante possui habilitação de motorista
      * @param $ehEstudante - Indica se o solicitante é estudante
@@ -198,6 +221,7 @@ class EmprestimoAutomovel extends Emprestimo {
 		$idade: number,
 		$valorDoEmprestimo: number,
 		$quantidadeDeParcelas: number,
+		$valorDasParcelas: number,
 		$rendaMensalDoSolicitante: number,
 		$possuiHabilitacao: boolean,
 		$ehEstudante: boolean
@@ -207,6 +231,7 @@ class EmprestimoAutomovel extends Emprestimo {
 			$idade,
 			$valorDoEmprestimo,
 			$quantidadeDeParcelas,
+			$valorDasParcelas,
 			$rendaMensalDoSolicitante,
 			$possuiHabilitacao,
 			$ehEstudante
@@ -220,14 +245,12 @@ class EmprestimoAutomovel extends Emprestimo {
 	public aprovarEmprestimo(): boolean {
 		let ehMaiorDeIdade: boolean = this.$idade >= 18;
 		let possuiRendaSuficiente: boolean = this.$rendaMensalDoSolicitante > 3000;
-		let podePagarParcela: boolean =
-			this.$valorDoEmprestimo / this.$quantidadeDeParcelas <=
-			this.$rendaMensalDoSolicitante * 0.3;
+		let valorConfere: boolean = ((this.$valorDoEmprestimo/this.$quantidadeDeParcelas) === (this.$valorDasParcelas) );
 
 		return (
 			ehMaiorDeIdade &&
 			possuiRendaSuficiente &&
-			podePagarParcela &&
+			valorConfere &&
 			this.$possuiHabilitacao
 		);
 	}
@@ -240,10 +263,11 @@ class EmprestimoAutomovel extends Emprestimo {
 class EmprestimoEstudantil extends Emprestimo {
      /**
      * Construtor da classe EmprestimoEstudantil
-     * @param $nome - Nome do solicitante
+      * @param $nome - Nome do solicitante
      * @param $idade - Idade do solicitante
      * @param $valorDoEmprestimo - Valor solicitado para empréstimo
      * @param $quantidadeDeParcelas - Número de parcelas do empréstimo
+     * @param $valorDasParcelas - valor das parcelas do empréstimo
      * @param $rendaMensalDoSolicitante - Renda mensal do solicitante
      * @param $possuiHabilitacao - Indica se o solicitante possui habilitação de motorista
      * @param $ehEstudante - Indica se o solicitante é estudante
@@ -253,6 +277,7 @@ class EmprestimoEstudantil extends Emprestimo {
 		$idade: number,
 		$valorDoEmprestimo: number,
 		$quantidadeDeParcelas: number,
+		$valorDasParcelas: number,
 		$rendaMensalDoSolicitante: number,
 		$possuiHabilitacao: boolean,
 		$ehEstudante: boolean
@@ -262,6 +287,7 @@ class EmprestimoEstudantil extends Emprestimo {
 			$idade,
 			$valorDoEmprestimo,
 			$quantidadeDeParcelas,
+			$valorDasParcelas,
 			$rendaMensalDoSolicitante,
 			$possuiHabilitacao,
 			$ehEstudante
@@ -272,16 +298,14 @@ class EmprestimoEstudantil extends Emprestimo {
      * @returns {boolean} - Retorna true se o empréstimo for aprovado, false caso contrário.
      */
 	public aprovarEmprestimo(): boolean {
-		let ehMaiorDeIdade: boolean = this.$idade >= 18;
-		let possuiRendaSuficiente: boolean = this.$rendaMensalDoSolicitante > 3000;
-		let podePagarParcela: boolean =
-			this.$valorDoEmprestimo / this.$quantidadeDeParcelas <=
-			this.$rendaMensalDoSolicitante * 0.3;
+		let idadeCorreta: boolean = this.$idade >= 18 && this.$idade <=30;
+		let possuiRendaSuficiente: boolean = this.$rendaMensalDoSolicitante > 1500;
+		let valorConfere: boolean = ((this.$valorDoEmprestimo/this.$quantidadeDeParcelas) === (this.$valorDasParcelas) );
 
 		return (
-			ehMaiorDeIdade &&
+			idadeCorreta &&
 			possuiRendaSuficiente &&
-			podePagarParcela &&
+			valorConfere &&
 			this.$ehEstudante
 		);
 	}
@@ -289,47 +313,26 @@ class EmprestimoEstudantil extends Emprestimo {
 
 const solicitacoes: Emprestimo[] = [];
 
-// Adiciona 4 objetos de `EmprestimoPessoal`
-solicitacoes.push(
-	new EmprestimoPessoal("Fulano", 25, 10000, 12, 5000, false, false)
-);
-solicitacoes.push(
-	new EmprestimoPessoal("Beltrano", 30, 20000, 24, 10000, true, false)
-);
-solicitacoes.push(
-	new EmprestimoPessoal("Ciclano", 40, 30000, 36, 15000, false, true)
-);
-solicitacoes.push(
-	new EmprestimoPessoal("Dulcinéia", 50, 40000, 48, 20000, true, true)
-);
+// Empréstimo Pessoal
+solicitacoes.push(new EmprestimoPessoal("Fulano 1", 25, 10000, 10, 1000, 5000, false, false)); // Aprovado
+solicitacoes.push(new EmprestimoPessoal("Fulano 2", 30, 8000, 10, 200, 4000, true, false)); // Reprovado
+solicitacoes.push(new EmprestimoPessoal("Fulano 3", 28, 12000, 8, 300, 6000, true, true)); // Reprovado
+solicitacoes.push(new EmprestimoPessoal("Fulano 4", 35, 15000, 15, 1000, 8000, true, true)); // Aprovado
+solicitacoes.push(new EmprestimoPessoal("Fulano 5", 40, 20000, 20, 1200, 10000, true, true)); // Reprovado
 
-// Adiciona 4 objetos de `EmprestimoAutomovel`
-solicitacoes.push(
-	new EmprestimoAutomovel("Eduardo", 22, 50000, 60, 3000, true, false)
-);
-solicitacoes.push(
-	new EmprestimoAutomovel("Felipe", 28, 60000, 72, 4000, true, false)
-);
-solicitacoes.push(
-	new EmprestimoAutomovel("Guilherme", 34, 70000, 84, 5000, false, true)
-);
-solicitacoes.push(
-	new EmprestimoAutomovel("Heitor", 40, 80000, 96, 6000, true, true)
-);
+// Empréstimo Automóvel
+solicitacoes.push(new EmprestimoAutomovel("Ciclano 1", 27, 20000, 24, 800, 4000, true, true)); // Reprovado
+solicitacoes.push(new EmprestimoAutomovel("Ciclano 2", 33, 25000, 36, 700, 5000, true, true)); // Reprovado
+solicitacoes.push(new EmprestimoAutomovel("Ciclano 3", 29, 18000, 18, 1000, 6000, true, false)); // Aprovado
+solicitacoes.push(new EmprestimoAutomovel("Ciclano 4", 35, 30000, 30, 1200, 8000, true, true)); // Reprovado
+solicitacoes.push(new EmprestimoAutomovel("Ciclano 5", 32, 22000, 24, 900, 7000, true, false)); // Reprovado
 
-// Adiciona 4 objetos de `EmprestimoEstudantil`
-solicitacoes.push(
-	new EmprestimoEstudantil("Igor", 18, 10000, 12, 500, true, true)
-);
-solicitacoes.push(
-	new EmprestimoEstudantil("Júlio", 22, 20000, 24, 1000, true, true)
-);
-solicitacoes.push(
-	new EmprestimoEstudantil("Kleber", 26, 30000, 36, 1500, true, true)
-);
-solicitacoes.push(
-	new EmprestimoEstudantil("Lucas", 30, 40000, 48, 2000, true, true)
-);
+// Empréstimo Estudantil
+solicitacoes.push(new EmprestimoEstudantil("Beltrano 1", 19, 5000, 12, 200, 2000, false, true)); // Reprovado
+solicitacoes.push(new EmprestimoEstudantil("Beltrano 2", 22, 8000, 18, 300, 2500, false, true)); // Reprovado
+solicitacoes.push(new EmprestimoEstudantil("Beltrano 3", 20, 6000, 15, 250, 2200, false, true)); // Reprovado
+solicitacoes.push(new EmprestimoEstudantil("Beltrano 4", 25, 10000, 24, 400, 3000, false, true)); // Reprovado
+solicitacoes.push(new EmprestimoEstudantil("Beltrano 5", 21, 7000, 20, 350, 2800, false, true)); // Aprovado
 
-// Chama o método `verificarTudo()`
+
 Emprestimo.verificarTudo(solicitacoes);
